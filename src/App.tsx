@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import InputField from './inputField';
 import MultiStepForm, { FormStep } from './MultiStepForm';
 import DateOfBirth from './datepicker'
+import DynamicInput from './dynamicInput';
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
@@ -22,8 +23,9 @@ function App() {
             email:'',
             contact:'',
             dob:'',
-            street:'',
-            country:'',
+            location:'',
+            photo:'',
+            schoolname: '',
           }}
           onSubmit={values => {
             alert(JSON.stringify(values, null, 2))
@@ -58,6 +60,16 @@ function App() {
             })}
           >
             <InputField name="photo" label="Photo"/>
+          </FormStep>
+
+          <FormStep 
+            stepName="Education" 
+            onSubmit={() => console.log('Step4 Submit')}
+            validationSchema={yup.object({
+              schoolname: yup.string().required('School name is required'),
+            })}
+          >
+            <DynamicInput/>
           </FormStep>
         </MultiStepForm>
       </header>
