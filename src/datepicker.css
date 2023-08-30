@@ -1,0 +1,21 @@
+.input-field-container {
+  margin-bottom: 200px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+label{
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0;
+  font-size: 1rem;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  line-height: 4;
+  letter-spacing: 0.00938em;
+  margin-right: 1rem;
+}
