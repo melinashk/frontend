@@ -4,13 +4,14 @@ import * as yup from 'yup';
 import InputField from './inputField';
 import MultiStepForm, { FormStep } from './MultiStepForm';
 import DateOfBirth from './datepicker'
-import DynamicInput from './dynamicInput';
+import TextEditor from './TextEditor';
+import AutoComplete from './Autocomplete';
+
 
 const validationSchema = yup.object({
   name: yup.string().required('Name is required'),
   email: yup.string().email().required('Email is required'),
-  contact: yup.number().required('Contact is required'),
-
+  contact: yup.number().required('Contact is required')
 })
 
 function App() {
@@ -22,10 +23,10 @@ function App() {
             name:'',
             email:'',
             contact:'',
-            dob:'',
+            dob:null,
             location:'',
             photo:'',
-            schoolname: '',
+            about: ''
           }}
           onSubmit={values => {
             alert(JSON.stringify(values, null, 2))
@@ -39,8 +40,9 @@ function App() {
             <InputField name="name" label="Name"/>
             <InputField name="email" label="Email"/>
             <InputField name="contact" label="Contact"/>
+            <AutoComplete />
             <DateOfBirth/>
-          </FormStep> 
+          </FormStep>
 
           <FormStep 
             stepName="Address" 
@@ -56,20 +58,17 @@ function App() {
             stepName="Profile Picture" 
             onSubmit={() => console.log('Step3 Submit')}
             validationSchema={yup.object({
-              photo: yup.string().required('Location is required'),
+              photo: yup.string().required('Photo is required'),
             })}
           >
             <InputField name="photo" label="Photo"/>
           </FormStep>
 
-          <FormStep 
-            stepName="Education" 
+          <FormStep
+            stepName= "About Yourself"
             onSubmit={() => console.log('Step4 Submit')}
-            validationSchema={yup.object({
-              schoolname: yup.string().required('School name is required'),
-            })}
           >
-            <DynamicInput/>
+            <TextEditor/>
           </FormStep>
         </MultiStepForm>
       </header>

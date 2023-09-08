@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Field, FieldProps } from 'formik'; // Import FieldProps
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'
-import './datepicker.css'
+import 'react-datepicker/dist/react-datepicker.css';
 
 const DateOfBirth = () => {
-  const [startDate, setStartDate] = useState(new Date());
-
-  const handleDateChange = (date: Date | null) => {
-    setStartDate(date || new Date());
-  };
-
   return (
-    <div className="input-field-container">
+    <div>
       <label>Date of Birth</label>
-      <DatePicker
-        className='input-field'
-        selected={startDate}
-        onChange={handleDateChange}
-      />  
+      <Field name="dob">
+        {({ field, form }: FieldProps) => ( // Specify the type for field
+          <DatePicker
+            selected={field.value}
+            onChange={(date) => form.setFieldValue(field.name, date)}
+            dateFormat="dd/MM/yyyy"
+          />
+        )}
+      </Field>
     </div>
   );
 };
 
 export default DateOfBirth;
-
-

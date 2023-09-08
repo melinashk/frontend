@@ -34,7 +34,7 @@ const MultiStepForm = ({ children, initialValues, onSubmit}: Props) => {
     if(isLastStep) {
       return onSubmit(values, actions)
     } else {
-      actions.setTouched({});
+      //actions.setTouched({});
       next(values)
     }
   }
@@ -73,4 +73,5 @@ const MultiStepForm = ({ children, initialValues, onSubmit}: Props) => {
 
 export default MultiStepForm
 
-export const FormStep = ({stepName = '', children}: any) => children
+export const FormStep = (
+  {stepName = '', children}: any) => children
