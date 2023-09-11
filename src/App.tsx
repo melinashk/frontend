@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import * as yup from 'yup';
 import InputField from './inputField';
@@ -6,6 +6,7 @@ import MultiStepForm, { FormStep } from './MultiStepForm';
 import DateOfBirth from './datepicker'
 import TextEditor from './TextEditor';
 import AutoComplete from './Autocomplete';
+import CountrySelect from './Autocomplete';
 
 
 const validationSchema = yup.object({
@@ -14,7 +15,13 @@ const validationSchema = yup.object({
   contact: yup.number().required('Contact is required')
 })
 
-function App() {
+function App(){
+  const [selectedAddress, setSelectedAddress] = useState<string>(''); // Local state for selected location
+
+  // Function to handle location change
+  const handleAddressChange = (address: string) => {
+    setSelectedAddress(address);
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -24,12 +31,14 @@ function App() {
             email:'',
             contact:'',
             dob:null,
-            location:'',
+            address:'',
             photo:'',
             about: ''
           }}
-          onSubmit={values => {
-            alert(JSON.stringify(values, null, 2))
+          onSubmit={(values) => {
+            const alertMessage = 
+            `Name: ${values.name}\nEmail: ${values.email}\nContact: ${values.contact}\nAddress: ${selectedAddress}\nDOB: ${values.dob}\nPhoto: ${values.photo}\nAbout: ${values.about}`;
+            alert(alertMessage);
           }}
         >
           <FormStep 
@@ -40,18 +49,15 @@ function App() {
             <InputField name="name" label="Name"/>
             <InputField name="email" label="Email"/>
             <InputField name="contact" label="Contact"/>
-            <AutoComplete />
+
             <DateOfBirth/>
           </FormStep>
 
           <FormStep 
             stepName="Address" 
             onSubmit={() => console.log('Step2 Submit')}
-            validationSchema={yup.object({
-              location: yup.string().required('Location is required'),
-            })}
           >
-            <InputField name="location" label="Location"/>
+            <CountrySelect onAddressChange={handleAddressChange} />
           </FormStep>
 
           <FormStep 
