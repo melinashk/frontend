@@ -5,8 +5,8 @@ import InputField from './inputField';
 import MultiStepForm, { FormStep } from './MultiStepForm';
 import DateOfBirth from './datepicker'
 import TextEditor from './TextEditor';
-import AutoComplete from './Autocomplete';
 import CountrySelect from './Autocomplete';
+import FileUpload from './fileUpload';
 
 
 const validationSchema = yup.object({
@@ -17,11 +17,22 @@ const validationSchema = yup.object({
 
 function App(){
   const [selectedAddress, setSelectedAddress] = useState<string>(''); // Local state for selected location
+  const [textEditorText, setTextEditorText] = useState<string>('');
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   // Function to handle location change
   const handleAddressChange = (address: string) => {
     setSelectedAddress(address);
   };
+
+  const handleTextEditorChange = (text: string) => {
+    setTextEditorText(text);
+  };
+
+  const handleFileChange = (file: File) => {
+    setSelectedFile(file);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
@@ -36,9 +47,26 @@ function App(){
             about: ''
           }}
           onSubmit={(values) => {
-            const alertMessage = 
-            `Name: ${values.name}\nEmail: ${values.email}\nContact: ${values.contact}\nAddress: ${selectedAddress}\nDOB: ${values.dob}\nPhoto: ${values.photo}\nAbout: ${values.about}`;
-            alert(alertMessage);
+            const alertMessage = {
+              name: values.name,
+              email: values.email,
+              contact: values.contact,
+              address: selectedAddress,
+              dob: values.dob,
+              photo: selectedFile?.name, 
+              about: textEditorText,
+            };
+
+            
+            const jsonOutput = JSON.stringify(alertMessage, null, 2);
+
+            alert(jsonOutput)
+            // const blob = new Blob([jsonOutput], { type: "application/json" });
+
+            // const url = URL.createObjectURL(blob);
+            // window.open(url);
+
+            // URL.revokeObjectURL(url);
           }}
         >
           <FormStep 
@@ -63,18 +91,15 @@ function App(){
           <FormStep 
             stepName="Profile Picture" 
             onSubmit={() => console.log('Step3 Submit')}
-            validationSchema={yup.object({
-              photo: yup.string().required('Photo is required'),
-            })}
           >
-            <InputField name="photo" label="Photo"/>
+            <FileUpload onFileChange={handleFileChange} />
           </FormStep>
 
           <FormStep
             stepName= "About Yourself"
             onSubmit={() => console.log('Step4 Submit')}
           >
-            <TextEditor/>
+            <TextEditor onTextChange={handleTextEditorChange}/>
           </FormStep>
         </MultiStepForm>
       </header>

@@ -1,23 +1,26 @@
-// import { useState } from "react";
-// import { Field, FieldProps } from "formik";
+import { useState } from "react";
 
-// const FileUpload = () => {
-//   const [file, setFile] = useState<File | null>(null);
+type FileUploadProps = {
+  onFileChange: (file: File) => void;
+};
 
-//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     const selectedFile = e.target.files?.[0]; // Use optional chaining to safely access files[0]
-//     if (selectedFile) {
-//       setFile(selectedFile);
-//     }
-//   };
+const FileUpload: React.FC<FileUploadProps> = ({ onFileChange }) => {
+  const [file, setFile] = useState<File | null>(null);
 
-//   return (
-//     <div>
-//       <label>Photo</label>
-//       <Field 
-//       <input onChange={handleFileChange} type="file" />
-//     </div>
-//   );
-// };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      onFileChange(selectedFile);
+    }
+  };
 
-// export default FileUpload;
+  return (
+    <div>
+      <label>Photo</label>
+      <input onChange={handleFileChange} type="file" />
+    </div>
+  );
+};
+
+export default FileUpload;

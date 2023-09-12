@@ -54,8 +54,8 @@ const CountrySelect = ({onAddressChange} : CountrySelectProps) => {
           <img
             loading="lazy"
             width="20"
-            src={`https://restcountries.com/v3.1/all${option.cca2}.png`}
-            srcSet={`https://restcountries.com/v3.1/all${option.ccn3}.png 2x`}
+            // src={`https://restcountries.com/v3.1/all${option.cca2}.png`}
+            // srcSet={`https://restcountries.com/v3.1/all${option.ccn3}.png 2x`}
             alt=""
           />
           <div>
