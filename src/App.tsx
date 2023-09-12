@@ -61,12 +61,6 @@ function App(){
             const jsonOutput = JSON.stringify(alertMessage, null, 2);
 
             alert(jsonOutput)
-            // const blob = new Blob([jsonOutput], { type: "application/json" });
-
-            // const url = URL.createObjectURL(blob);
-            // window.open(url);
-
-            // URL.revokeObjectURL(url);
           }}
         >
           <FormStep 
